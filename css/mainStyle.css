@@ -1,0 +1,51 @@
+
+#wrongExtensionLabel{
+   font-size: 15px;
+   color: red;
+}
+
+#fileInput{
+   width: 700px;
+   margin: 0;
+}
+
+#uploadButton{
+   margin: 0;
+}
+
+table{
+   table-layout: fixed;
+   font-size: 12px;
+}
+
+th{
+   font-size: 14px;
+}
+
+td{
+   word-break: break-all;
+}
+
+.errorLabel{
+   font-weight: bold;
+   color: red;
+}
+
+.col1{
+   width: 4%;
+}
+.col2{
+   width: 8%;
+}
+.col3{
+   width: 20%;
+}
+.col4{
+   width: 30%;
+}
+.col5{
+   width: 10%;
+}
+.col6{
+   width: 10%;
+}
