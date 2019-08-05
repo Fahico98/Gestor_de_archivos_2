@@ -88,11 +88,6 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
          integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
-      <!-- jQuery file upload plugin scripts -->
-      <script src="javascript/jQuery_file_upload_plugin/vendor/jquery.ui.widget.js" language="JavaScript" type="text/javascript"></script>
-      <script src="javascript/jQuery_file_upload_plugin/jquery.iframe-transport.js" language="JavaScript" type="text/javascript"></script>
-      <script src="javascript/jQuery_file_upload_plugin/jquery.fileupload.js" language="JavaScript" type="text/javascript"></script>
-
       <!-- Own Script -->
       <script src="javascript/mainScript.js"></script>
    </body>
