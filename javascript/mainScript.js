@@ -4,6 +4,10 @@ var wrongExtensionLabel = $("#wrongExtensionLabel");
 var uploadForm = $("#uploadForm");
 var tableBody = $("#tableBody");
 var deleteButton = $(".deleteButton");
+var modalTitle = $("#modalTitle");
+var buttonTriggerModal = $("#buttonTriggerModal");
+var fileContent = $("#fileContent");
+var saveChangesButton = $("#saveChangesButton");
 var allowedExtensions =
    [
       "pdf",
@@ -32,21 +36,22 @@ $(document).ready(function(event){
    uploadForm.on("submit", function(event){
       event.preventDefault();
       var data = new FormData($(this)[0]);
-      var strArray = fileInput.val().split("\\");
-      var fileName = strArray[strArray.length - 1];
-      var validExtension = validateExtension(fileName);
-      if(fileInput.val() !== "" && validExtension){
-         $.ajax({
-            type: "POST",
-            url: "php/uploadFile.php",
-            data: data,
-            processData: false,
-            contentType: false,
-            dataType: "html",
-            success: function(response){
-               tableBody.prepend(response);
-            }
-         });
+      if(fileInput.val() !== ""){
+         var strArray = fileInput.val().split("\\");
+         var fileName = strArray[strArray.length - 1];
+         if(validateExtension(fileName)){
+            $.ajax({
+               type: "POST",
+               url: "php/uploadFile.php",
+               data: data,
+               processData: false,
+               contentType: false,
+               dataType: "html",
+               success: function(response){
+                  tableBody.prepend(response);
+               }
+            });
+         }
       }
    });
    $(document).on("click", ".deleteButton", function(event){
@@ -63,6 +68,33 @@ $(document).ready(function(event){
             }
          });
       }
+   });
+   $(document).on("click", ".editButton", function(event){
+      event.preventDefault();
+      var fileName = $(this).attr("name");
+      modalTitle.text(fileName);
+      buttonTriggerModal.trigger("click");
+      $.ajax({
+         type: "POST",
+         url: "php/getTextFile.php",
+         data: {fileName: fileName},
+         success: function(response){
+            fileContent.val(response.trim());
+         }
+      });
+   });
+   $(document).on("click", "#saveChangesButton", function(event){
+      event.preventDefault();
+      var content = fileContent.val();
+      var fileName = modalTitle.text();
+      $.ajax({
+         type: "POST",
+         url: "php/updateTextfile.php",
+         data: {
+            fileName: fileName,
+            content: content
+         }
+      });
    });
 });
 
@@ -86,7 +118,7 @@ function validateExtension(fileName){
       wrongExtensionLabel.text("");
       return true;
    }else{
-      wrongExtensionLabel.text("No se está permitido cargar archivos con extensión ." + extension);
+      wrongExtensionLabel.text("No está permitido cargar archivos con extensión ." + extension);
       return false;
    }
 }

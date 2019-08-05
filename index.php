@@ -29,6 +29,26 @@
             <div class="row d-flex justify-content-center my-4">
                <h2 class="my-4">Gestor de archivos</h2>
             </div>
+            <button id="buttonTriggerModal" style="display: none;" type="button" data-toggle="modal" data-target="#modal">...</button>
+            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body text-center">
+                        <textarea name="fileContent" id="fileContent" cols="60" rows="10"></textarea>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal" id="saveChangesButton">Guardar cambios</button>
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
             <div class="row d-flex justify-content-start">
                <form enctype="multipart/form-data" id="uploadForm" name="uploadForm">
                   <button type="submit" class="btn btn-dark align-center" id="uploadButton">Cargar archivo</button>
@@ -36,7 +56,7 @@
                </form>
             </div>
             <div class="row d-flex justify-content-start mt-2">
-               <p id="wrongExtensionLabel"></p>
+               <p id="wrongExtensionLabel" class="font-weight-bold"></p>
             </div>
             <div class="row d-flex justify-content-center">
                <table class="table table-hover mt-2">

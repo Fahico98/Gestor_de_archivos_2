@@ -26,6 +26,10 @@ td{
    word-break: break-all;
 }
 
+.deleteButton, .editButton{
+   cursor: pointer;
+}
+
 .errorLabel{
    font-weight: bold;
    color: red;

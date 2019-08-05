@@ -22,12 +22,11 @@
                <td class='text-center col7'>" . $row['id_usuario_creacion'] . "</td>
                <td class='text-center col8'>" . $row['id_usuario_edicion'] . "</td>
                <td class='text-center col6'>
-                  <button type='button' class='btn btn-danger deleteButton'
-                     name='" . $row['nombre'] . "'>
-                     <i class='fas fa-trash-alt fa-xs'></i>
-                  </button>
-               </td>
-            </tr>";
+                  <i class='fas fa-trash-alt fa-lg deleteButton' name='" . $row['nombre'] . "'></i>";
+         if($row['tipo'] === "txt"){
+            $output .= "<i class='fas fa-edit fa-lg ml-2 editButton' name='" . $row['nombre'] . "'></i>";
+         }
+         $output .= "</td></tr>";
       }
       exit($output);
    }

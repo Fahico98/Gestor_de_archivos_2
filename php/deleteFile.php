@@ -4,8 +4,7 @@
    include("connection.php");
 
    try{
-      //if(isset($_POST["fileName"])){
-         global $db_name, $table_name;
+      if(isset($_POST["fileName"])){
          $pdo = connect();
          $query = "USE $db_name";
          $pdo->query($query);
@@ -14,10 +13,9 @@
          $pdo->query($query);
          $pdo = null;
          unlink("../uploads/$fileName");
-      //}else{
-      //   echo("***");
-      //}
+      }
    }catch(Exception $e){
       die("ERROR: " . $e->getMessage());
    }
+
 ?>
