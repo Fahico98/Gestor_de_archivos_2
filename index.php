@@ -49,18 +49,63 @@
                   </div>
                </div>
             </div>
-            <div class="row d-flex justify-content-start">
+            <div class="justify-content-start">
                <form enctype="multipart/form-data" id="uploadForm" name="uploadForm">
-                  <button type="submit" class="btn btn-dark align-center" id="uploadButton">Cargar archivo</button>
-                  <input type="file" class="mr-sm-2" id="fileInput" name="filesArray[]" multiple>
+                  <div class="btn-group row mx-1">
+                     <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" id="buttonDropdown1">
+                        Tabla
+                     </button>
+                     <div class="dropdown-menu">
+                        <option value="normatividad" class="dropdown-item option1">Normatividad</a>
+                        <option value="conac" class="dropdown-item option1">CONAC</a>
+                     </div>
+                  </div>
+                  <div class="btn-group mx-1" id="divDropdown2">
+                     <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"  id="buttonDropdown2" disabled>
+                        Opcion 2
+                     </button>
+                     <div class="dropdown-menu" id="optionsDropdown2"></div>
+                  </div>
+                  <div class="btn-group mx-1" id="dropdown3">
+                     <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" id="buttonDropdown3" disabled>
+                        Opcion 3
+                     </button>
+                     <div class="dropdown-menu" id="optionsDropdown3"></div>
+                  </div>
+                  <hr>
+                  <div class="form-group m-0">
+                     <input type="file" id="fileInput" name="filesArray[]" disabled>
+                     <small id="fileInputHelp" class="form-text text-muted">
+                        Recuerde que solo puede cargar un archivo a la vez.
+                     </small>
+                  </div>
+                  <hr>
+                  <div class="form-group m-0">
+                     <label for="fileNameInput">Nombre del archivo</label>
+                     <input type="text" class="form-control" id="fileNameInput" name="fileNameInput" placeholder="(Ninguno)" disabled>
+                     <small id="fileNameInputHelp" class="form-text text-muted">
+                        Puede cambiar el nombre del archivo si así lo desea.
+                     </small>
+                  </div>
+                  <hr>
+                  <div>
+                     <button type="submit" class="btn btn-dark align-center" id="submitButton" name="uploadButton" disabled>
+                        Cargar archivo
+                     </button>
+                  </div>
                </form>
             </div>
+            <!--
             <div class="row d-flex justify-content-start mt-2">
                <p id="wrongExtensionLabel" class="font-weight-bold"></p>
             </div>
+            -->
             <div class="row d-flex justify-content-center">
-               <table class="table table-hover mt-2">
-                  <thead>
+               <table class="table table-hover mt-4">
+                  <thead class="thead-dark">
                      <tr>
                         <th scope="col" class="text-center col1">Id</th>
                         <th scope="col" class="col2">Extención</th>

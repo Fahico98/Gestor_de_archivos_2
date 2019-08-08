@@ -17,7 +17,7 @@
          $absFilePath = str_replace("php", "", $currentFilePath) . "uploads\\$fileName";
          $status = fileValidation($relFilePath, $fileSize, $fileErrors);
          if($status === ""){
-            move_uploaded_file($fileTempName, $relFilePath);
+            move_uploaded_file($fileTempName, $absFilePath);
             saveFile($fileName, $fileType, $absFilePath, $fileSize);
             $response .= generateTR($fileName);
          }else{

@@ -5,12 +5,16 @@
 }
 
 #fileInput{
-   width: 700px;
+   width: 100%;
    margin: 0;
 }
 
 #uploadButton{
    margin: 0;
+}
+
+#fileNameInput{
+   width: 50%;
 }
 
 table{
@@ -26,7 +30,7 @@ td{
    word-break: break-all;
 }
 
-.deleteButton, .editButton{
+.deleteButton, .editButton, option{
    cursor: pointer;
 }
 
