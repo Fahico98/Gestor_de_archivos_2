@@ -1,7 +1,8 @@
 <?php
 
    include("connection.php");
-
+   
+   $table_name = $_POST["tableName"];
    $output = "";
    $pdo = connect();
    $query = "USE $db_name";
@@ -10,7 +11,6 @@
    $result = $pdo->query($query);
    if($result->rowCount() > 0){
       foreach($result as $row){
-         $editLabel = ($row['fecha_edicion'] === "") ? "No se ha editado" : $row['fecha_edicion'];
          $output .= 
             "<tr>
                <th class='text-center col1'>" . $row['id'] . "</th>
@@ -18,9 +18,9 @@
                <td class='col3'>" . $row['nombre'] . "</td>
                <td class='col4'>" . $row['ruta'] . "</td>
                <td class='text-center col5'>" . $row['fecha_creacion'] . "</td>
-               <td class='text-center col6'>" . $editLabel . "</td>
-               <td class='text-center col7'>" . $row['id_usuario_creacion'] . "</td>
-               <td class='text-center col8'>" . $row['id_usuario_edicion'] . "</td>
+               <td class='text-center col6'>" . $row['fecha_vencimiento'] . "</td>
+               <td class='text-center col7'>" . $row['seccion'] . "</td>
+               <td class='text-center col8'>" . $row['id_usuario_creacion'] . "</td>
                <td class='text-center col6'>
                   <i class='fas fa-trash-alt fa-lg deleteButton' name='" . $row['nombre'] . "'></i>";
          if($row['tipo'] === "txt"){

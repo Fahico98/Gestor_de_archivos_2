@@ -1,67 +1,63 @@
 <?php
 
-   include("trGenerator.php");
+   include("connection.php");
 
    if(isset($_FILES["filesArray"])){
-      $response = "";
       $filesArray = $_FILES["filesArray"];
+      $fileName = basename($filesArray["name"][0]);
+      $fileTempName = $filesArray["tmp_name"][0];
+      $fileSize = $filesArray["size"][0];
+      $fileErrors = $filesArray["error"][0];
+      $newFileName = $_POST["fileNameInput"];
+      $fileSection = $_POST["section"];
+      $tableName = $_POST["tableName"];
       $currentFilePath = dirname(__FILE__);
-      for($i = 0; $i < sizeof($filesArray["name"]); $i++){
-         $fileTempName = $filesArray["tmp_name"][$i];
-         $fileName = basename($filesArray["name"][$i]);
-         $fileSize = $filesArray["size"][$i];
-         $fileErrors = $filesArray["error"][$i];
-         $buffer = explode(".", $fileName);
-         $fileType = end($buffer);
-         $relFilePath = "../uploads/$fileName";
-         $absFilePath = str_replace("php", "", $currentFilePath) . "uploads\\$fileName";
-         $status = fileValidation($relFilePath, $fileSize, $fileErrors);
-         if($status === ""){
+      $buffer = explode(".", $fileName);
+      $fileType = end($buffer);
+      $relFilePath = "../$tableName/$fileName";
+      $absFilePath = str_replace("php", "", $currentFilePath) . "$tableName\\$fileName";
+      $newAbsFilePath = str_replace($fileName, $newFileName, $absFilePath);
+      $status = ($fileErrors > 0) ? "error" : "success";
+      $respose = "uploadSuccessfull";
+      if($status === "success"){
+         $respose = (file_exists($newAbsFilePath)) ? "existingFile" : "uploadSuccessfull";
+         if($respose === "uploadSuccessfull"){
             move_uploaded_file($fileTempName, $absFilePath);
-            saveFile($fileName, $fileType, $absFilePath, $fileSize);
-            $response .= generateTR($fileName);
-         }else{
-            $response .= generateTR($fileName, $fileType, $status);
+            saveFile($tableName, $newFileName, $fileType, $newAbsFilePath, $fileSize, $fileSection);
+            if($fileName !== $newFileName){
+               rename($absFilePath, $newAbsFilePath);
+            }
          }
       }
-      exit($response);
+      exit($respose);
    }
 
-   function fileValidation($filePath, $fileSize, $fileErrors){
-      $output = "";
-      if(file_exists($filePath)){
-         $output = "exists";
-      }else if($fileSize > 10000000){
-         $output = "sizeExceeded";
-      }else if($fileErrors > 0){
-         $output = "error";
-      }
-      return($output);
-   }
-
-   function saveFile($fileName, $fileType, $filePath, $fileSize){
+   function saveFile($tableName, $fileName, $fileType, $filePath, $fileSize, $fileSection){
       try{
-         global $db_name, $table_name;
+         global $db_name;
          $pdo = connect();
          $query = "USE $db_name";
          $pdo->query($query);
          $query = 
-            "INSERT INTO $table_name (
+            "INSERT INTO $tableName (
                nombre,
                tipo,
                ruta,
-               tamaño
+               tamaño,
+               seccion
             ) VALUES (
                :fileName,
                :fileType,
                :filePath,
-               :fileSize
+               :fileSize,
+               :fileSection
             )";
          $result = $pdo->prepare($query);
          $result->bindValue(":fileName", $fileName);
          $result->bindValue(":fileType", $fileType);
          $result->bindValue(":filePath", $filePath);
          $result->bindValue(":fileSize", $fileSize);
+         $result->bindValue(":fileSection", $fileSection);
          $result->execute();
          $pdo = null;
       }catch(Exception $e){

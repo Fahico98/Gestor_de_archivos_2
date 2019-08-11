@@ -2,7 +2,6 @@
 
    $db_host = "localhost";
    $db_name = "hemerson_database";
-   $table_name = "uploads";
    $db_userName = "root";
    $db_password = "";
    $dns = "mysql:host=$db_host;charset=utf8";

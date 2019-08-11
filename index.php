@@ -27,7 +27,7 @@
       <div class="container my-5">
          <div class="col">
             <div class="row d-flex justify-content-center my-4">
-               <h2 class="my-4">Gestor de archivos</h2>
+               <h2 class="my-3">CONAC</h2>
             </div>
             <button id="buttonTriggerModal" style="display: none;" type="button" data-toggle="modal" data-target="#modal">...</button>
             <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
@@ -51,29 +51,29 @@
             </div>
             <div class="justify-content-start">
                <form enctype="multipart/form-data" id="uploadForm" name="uploadForm">
-                  <div class="btn-group row mx-1">
+                  <div class="btn-group mx-1">
                      <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" id="buttonDropdown1">
+                        aria-expanded="false" id="buttonDropdown1" name="buttonDropdown1">
                         Tabla
                      </button>
-                     <div class="dropdown-menu">
+                     <div class="dropdown-menu" id="optionsDropdown1" name="optionsDropdown1">
                         <option value="normatividad" class="dropdown-item option1">Normatividad</a>
                         <option value="conac" class="dropdown-item option1">CONAC</a>
                      </div>
                   </div>
-                  <div class="btn-group mx-1" id="divDropdown2">
+                  <div class="btn-group mx-1">
                      <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"  id="buttonDropdown2" disabled>
+                        aria-expanded="false"  id="buttonDropdown2" name="buttonDropdown2" disabled>
                         Opcion 2
                      </button>
-                     <div class="dropdown-menu" id="optionsDropdown2"></div>
+                     <div class="dropdown-menu" id="optionsDropdown2" name="optionsDropdown2"></div>
                   </div>
-                  <div class="btn-group mx-1" id="dropdown3">
+                  <div class="btn-group mx-1">
                      <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" id="buttonDropdown3" disabled>
+                        aria-expanded="false" id="buttonDropdown3" name="buttonDropdown3" disabled>
                         Opcion 3
                      </button>
-                     <div class="dropdown-menu" id="optionsDropdown3"></div>
+                     <div class="dropdown-menu" id="optionsDropdown3" name="optionsDropdown3"></div>
                   </div>
                   <hr>
                   <div class="form-group m-0">
@@ -92,19 +92,27 @@
                   </div>
                   <hr>
                   <div>
-                     <button type="submit" class="btn btn-dark align-center" id="submitButton" name="uploadButton" disabled>
+                     <button type="submit" class="btn btn-dark align-center" id="submitButton" name="submitButton" disabled>
                         Cargar archivo
                      </button>
                   </div>
                </form>
+               <hr>
+               <div class="form-group d-flex justify-content-end align-items-center">
+                  <div class="btn-group m-0">
+                     <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false" id="tableSelectorButton" name="tableSelectorButton">
+                        Normatividad
+                     </button>
+                     <div class="dropdown-menu">
+                        <option value='normatividad' class='dropdown-item optionTableSelector'>Normatividad</option>
+                        <option value='conac' class='dropdown-item optionTableSelector'>CONAC</option>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <!--
-            <div class="row d-flex justify-content-start mt-2">
-               <p id="wrongExtensionLabel" class="font-weight-bold"></p>
-            </div>
-            -->
             <div class="row d-flex justify-content-center">
-               <table class="table table-hover mt-4">
+               <table class="table table-hover mt-1">
                   <thead class="thead-dark">
                      <tr>
                         <th scope="col" class="text-center col1">Id</th>
@@ -112,9 +120,9 @@
                         <th scope="col" class="col3">Nombre</th>
                         <th scope="col" class="col4">Ruta</th>
                         <th scope="col" class="text-center col5">Fecha de creación</th>
-                        <th scope="col" class="text-center col5">Ultima modificación</th>
+                        <th scope="col" class="text-center col5">Fecha de vencimiento</th>
+                        <th scope="col" class="text-center col5">Sección</th>
                         <th scope="col" class="text-center col5">Creado por</th>
-                        <th scope="col" class="text-center col5">Modificado por</th>
                         <th scope="col" class="text-center col6"></th>
                      </tr>
                   </thead>
