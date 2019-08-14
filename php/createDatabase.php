@@ -19,7 +19,7 @@
                ruta                    VARCHAR(255) NOT NULL,
                tamaño                  INT,
                fecha_creacion          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-               fecha_vencimiento       TIMESTAMP,
+               fecha_vencimiento       DATE NOT NULL,
                seccion                 VARCHAR(50),
                id_usuario_creacion     INT
             )";
@@ -32,7 +32,7 @@
                ruta                    VARCHAR(255) NOT NULL,
                tamaño                  INT,
                fecha_creacion          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-               fecha_vencimiento       TIMESTAMP,
+               fecha_vencimiento       DATE NOT NULL,
                seccion                 VARCHAR(50),
                id_usuario_creacion     INT
             )";

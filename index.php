@@ -91,6 +91,14 @@
                      </small>
                   </div>
                   <hr>
+                  <div class="form-group m-0">
+                     <label for="expirationDate">Fecha de vencimiento del archivo</label>
+                     <input type="date" class="form-control" name="expirationDate" id="expirationDate" style="width: 50%;" disabled>
+                     <small id="expirationDateHelp" class="form-text text-muted">
+                        Es obligatirio establecer una fecha de vencimiento para cada archivo cargado.
+                     </small>
+                  </div>
+                  <hr>
                   <div>
                      <button type="submit" class="btn btn-dark align-center" id="submitButton" name="submitButton" disabled>
                         Cargar archivo

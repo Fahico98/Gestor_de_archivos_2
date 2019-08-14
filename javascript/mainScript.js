@@ -18,6 +18,9 @@ var buttonDropdown3 = $("#buttonDropdown3");
 var optionsDropdown2 = $("#optionsDropdown2");
 var optionsDropdown3 = $("#optionsDropdown3");
 var tableSelectorButton = $("#tableSelectorButton");
+var expirationDate = $("#expirationDate");
+var expirationDateHelp = $("#expirationDateHelp");
+var expirationDateAcepted = false;
 var tableSelected = "normatividad";
 var allowedExtensions =
    [
@@ -59,6 +62,7 @@ $(document).ready(function(event){
                fileInputHelp.css("color", "rgb(108, 117, 125)");
                fileNameInput.val(fileName);
                fileNameInput.attr("disabled", false);
+               expirationDate.attr("disabled", false);
                submitButton.attr("disabled", false);
             }else{
                fileInputHelp.text("No esta permitido cargar archivos cuyo tamañao sea mayor a 10MB.");
@@ -66,14 +70,16 @@ $(document).ready(function(event){
                fileInputHelp.css("color", "red");
                fileNameInput.val("(Ninguno)");
                fileNameInput.prop("disabled", true);
+               expirationDate.attr("disabled", true);
                submitButton.prop("disabled", true);
             }
          }else{
-            fileInputHelp.text("No esta permitido cargar archivos con estensión " + fileExtension + ".");
+            fileInputHelp.text("No esta permitido cargar archivos con extensión " + fileExtension + ".");
             fileInputHelp.removeClass("text-muted");
             fileInputHelp.css("color", "red");
             fileNameInput.val("(Ninguno)");
             fileNameInput.prop("disabled", true);
+            expirationDate.attr("disabled", true);
             submitButton.prop("disabled", true);
          }
       }else{
@@ -90,40 +96,44 @@ $(document).ready(function(event){
          var strArray = fileNameInput.val().split(".");
          var newExtension = strArray[strArray.length - 1];
          if(realExtension === newExtension){
-            fileNameInputHelp.text("Puede cambiar el nombre del archivo si así lo desea.");
-            fileNameInputHelp.addClass("text-muted");
-            fileNameInputHelp.css("color", "rgb(108, 117, 125)");
-            formData = new FormData(this);
-            formData.append("tableName", getTableName());
-            formData.append("section", buttonDropdown1.text() + buttonDropdown2.text() + buttonDropdown3.text());
-            $.ajax({
-               type: "POST",
-               url: "php/uploadFile.php",
-               data: formData,
-               dataType: "html",
-               contentType: false,
-               cache: false,
-               processData:false,
-               success: function(response){
-                  if(response === "existingFile"){
-                     fileInputHelp.text("El nombre del archivo que intenta cargar ya existe en la base de datos.");
-                     fileInputHelp.removeClass("text-muted");
-                     fileInputHelp.css("color", "red");
-                  }else if(response === "uploadSuccessfull"){
-                     if(getTableName() === "normatividad"){
-                        tableSelectorButton.text("Normatividad ");
-                        tableSelected = "normatividad";
-                     }else if(getTableName() === "conac"){
-                        tableSelectorButton.text("CONAC ");
-                        tableSelected = "conac";
+            if(expirationDateAcepted){
+               fileNameInputHelp.text("Puede cambiar el nombre del archivo si así lo desea.");
+               fileNameInputHelp.addClass("text-muted");
+               fileNameInputHelp.css("color", "rgb(108, 117, 125)");
+               formData = new FormData(this);
+               formData.append("tableName", getTableName());
+               formData.append("section", buttonDropdown1.text() + buttonDropdown2.text() + buttonDropdown3.text());
+               $.ajax({
+                  type: "POST",
+                  url: "php/uploadFile.php",
+                  data: formData,
+                  dataType: "html",
+                  contentType: false,
+                  cache: false,
+                  processData:false,
+                  success: function(response){
+                     if(response === "existingFile"){
+                        fileInputHelp.text("El nombre del archivo que intenta cargar ya existe en la base de datos.");
+                        fileInputHelp.removeClass("text-muted");
+                        fileInputHelp.css("color", "red");
+                     }else if(response === "uploadSuccessfull"){
+                        if(getTableName() === "normatividad"){
+                           tableSelectorButton.text("Normatividad ");
+                           tableSelected = "normatividad";
+                        }else if(getTableName() === "conac"){
+                           tableSelectorButton.text("CONAC ");
+                           tableSelected = "conac";
+                        }
+                        fileInputHelp.text("Recuerde que solo puede cargar un archivo a la vez.");
+                        fileInputHelp.addClass("text-muted");
+                        fileInputHelp.css("color", "rgb(108, 117, 125)");
+                        expirationDateHelp.addClass("text-muted");
+                        expirationDateHelp.css("color", "rgb(108, 117, 125)");
+                        getDatabase(getTableName());
                      }
-                     fileInputHelp.text("Recuerde que solo puede cargar un archivo a la vez.");
-                     fileInputHelp.addClass("text-muted");
-                     fileInputHelp.css("color", "rgb(108, 117, 125)");
-                     getDatabase(getTableName());
                   }
-               }
-            });
+               });
+            }
          }else{
             fileNameInputHelp.text("La extensión que acompaña al nuevo nombre del archivo no corresponde con su extensión real.");
             fileNameInputHelp.removeClass("text-muted");
@@ -208,6 +218,26 @@ $(document).ready(function(event){
             "<option value='1' class='dropdown-item option3'>1...</option>" +
             "<option value='2' class='dropdown-item option3'>2...</option>"
          );
+      }
+   });
+   $(document).on("change", "#expirationDate", function(event){
+      event.preventDefault();
+      var strArray = $(this).val().split("-");
+      var year = parseInt(strArray[0]);
+      var month = parseInt(strArray[1]) - 1;
+      var day = parseInt(strArray[2]);
+      var today = new Date();
+      var expirationDateObj = new Date(year, month, day);
+      if(today.getTime() > expirationDateObj.getTime()){
+         expirationDateHelp.text("La fecha de expiración debe ser posterior al día de hoy.");
+         expirationDateHelp.removeClass("text-muted");
+         expirationDateHelp.css("color", "red");
+         expirationDateAcepted = false;
+      }else{
+         expirationDateHelp.text("Es obligatirio establecer una fecha de vencimiento para cada archivo cargado.");
+         expirationDateHelp.addClass("text-muted");
+         expirationDateHelp.css("color", "rgb(108, 117, 125)");
+         expirationDateAcepted = true;
       }
    });
    $(document).on("click", ".option2", function(event){

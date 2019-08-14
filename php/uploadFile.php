@@ -9,6 +9,7 @@
       $fileSize = $filesArray["size"][0];
       $fileErrors = $filesArray["error"][0];
       $newFileName = $_POST["fileNameInput"];
+      $fielExpDate = $_POST["expirationDate"];
       $fileSection = $_POST["section"];
       $tableName = $_POST["tableName"];
       $currentFilePath = dirname(__FILE__);
@@ -23,7 +24,7 @@
          $respose = (file_exists($newAbsFilePath)) ? "existingFile" : "uploadSuccessfull";
          if($respose === "uploadSuccessfull"){
             move_uploaded_file($fileTempName, $absFilePath);
-            saveFile($tableName, $newFileName, $fileType, $newAbsFilePath, $fileSize, $fileSection);
+            saveFile($tableName, $newFileName, $fileType, $newAbsFilePath, $fileSize, $fielExpDate, $fileSection);
             if($fileName !== $newFileName){
                rename($absFilePath, $newAbsFilePath);
             }
@@ -32,7 +33,7 @@
       exit($respose);
    }
 
-   function saveFile($tableName, $fileName, $fileType, $filePath, $fileSize, $fileSection){
+   function saveFile($tableName, $fileName, $fileType, $filePath, $fileSize, $fielExpDate, $fileSection){
       try{
          global $db_name;
          $pdo = connect();
@@ -44,12 +45,14 @@
                tipo,
                ruta,
                tamaño,
+               fecha_vencimiento,
                seccion
             ) VALUES (
                :fileName,
                :fileType,
                :filePath,
                :fileSize,
+               :fileExpDate,
                :fileSection
             )";
          $result = $pdo->prepare($query);
@@ -57,6 +60,7 @@
          $result->bindValue(":fileType", $fileType);
          $result->bindValue(":filePath", $filePath);
          $result->bindValue(":fileSize", $fileSize);
+         $result->bindValue(":fileExpDate", $fielExpDate);
          $result->bindValue(":fileSection", $fileSection);
          $result->execute();
          $pdo = null;
